@@ -26,7 +26,6 @@ const INITIAL_DATA = [
 ];
 
 function App() {
-
 	const [items, setItems] = useState(INITIAL_DATA);
 
 	const addItem = item => {
@@ -34,7 +33,7 @@ function App() {
 			text: item.text,
 			title: item.title,
 			date: new Date(item.date),
-			id: Math.max(...oldItems.map(i => i.id)) + 1
+			id: oldItems.length > 0 ? Math.max(...oldItems.map(i => i.id)) + 1 : 1
 		}]);
 	};
 
@@ -43,18 +42,7 @@ function App() {
 			<LeftPanel>
 				<Header />
 				<JournalAddButton />
-
-				<JournalList>
-					{items.map(el => (
-						<CardButton key={el.id}>
-							<JournalItem
-								title={el.title}
-								text={el.text}
-								date={el.date}
-							/>
-						</CardButton>
-					))}
-				</JournalList>
+				<JournalList items={items} />
 			</LeftPanel>
 			<Body>
 				<JournalForm onSubmit={addItem} />
@@ -62,5 +50,6 @@ function App() {
 		</div>
 	);
 }
+
 
 export default App;

@@ -10,44 +10,51 @@ import JournalForm from './components/JournalForm/JournalForm';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
 
+const INITIAL_DATA = [
+	{
+		title: 'Подготовка к обновлению курсов',
+		text: 'Горные походы открывают удивительные природные ландшафт',
+		date: new Date()
+	},
+	{
+		title: 'Поход в годы',
+		text: 'Думал, что очень много времени',
+		date: new Date()
+	}
+];
+
 function App() {
-	const data = [
-		{
-			title: 'Подготовка к обновлению курсов',
-			text: 'Горные походы открывают удивительные природные ландшафт',
-			date: new Date()
-		},
-		{
-			title: 'Поход в годы',
-			text: 'Думал, что очень много времени',
-			date: new Date()
-		}
-	];
+
+	const [items, setItems] = useState(INITIAL_DATA);
+
+	const addItem = item => {
+		setItems(oldItems => [...oldItems, {
+			text: item.text,
+			title: item.title,
+			date: new Date(item.date)
+		}]);
+	};
 
 	return (
 		<div className='app'>
 			<LeftPanel>
 				<Header />
 				<JournalAddButton />
+
 				<JournalList>
-					<CardButton>
-						<JournalItem
-							title={data[0].title}
-							text={data[0].text}
-							date={data[0].date}
-						/>
-					</CardButton>
-					<CardButton>
-						<JournalItem
-							title={data[1].title}
-							text={data[1].text}
-							date={data[1].date}
-						/>
-					</CardButton>
+					{items.map(el => (
+						<CardButton>
+							<JournalItem
+								title={el.title}
+								text={el.text}
+								date={el.date}
+							/>
+						</CardButton>
+					))}
 				</JournalList>
 			</LeftPanel>
 			<Body>
-				<JournalForm />
+				<JournalForm onSubmit={addItem} />
 			</Body>
 		</div>
 	);

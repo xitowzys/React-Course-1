@@ -10,7 +10,7 @@ import JournalForm from './components/JournalForm/JournalForm';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
 import { useLocalStorage } from './hooks/use-localstorage.hook';
-import { UserContext } from './context/user.context';
+import { UserContext, UserContextProvider } from './context/user.context';
 
 // [
 // 	{
@@ -70,7 +70,6 @@ function App() {
 
 	const [items, setItems] = useLocalStorage('data');
 
-	const [userId, setUserId] = useState(2);
 
 	// useEffect(() => {
 	// 	if (items.length) {
@@ -89,7 +88,7 @@ function App() {
 	};
 
 	return (
-		<UserContext.Provider value={{ userId, setUserId }}>
+		<UserContextProvider>
 			<div className='app'>
 				<LeftPanel>
 					<Header />
@@ -100,7 +99,7 @@ function App() {
 					<JournalForm onSubmit={addItem} />
 				</Body>
 			</div>
-		</UserContext.Provider>
+		</UserContextProvider>
 	);
 }
 

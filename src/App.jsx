@@ -10,6 +10,7 @@ import JournalForm from './components/JournalForm/JournalForm';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
 import { useLocalStorage } from './hooks/use-localstorage.hook';
+import { UserContext } from './context/user.context';
 
 // [
 // 	{
@@ -69,6 +70,8 @@ function App() {
 
 	const [items, setItems] = useLocalStorage('data');
 
+	const [userId, setUserId] = useState(2);
+
 	// useEffect(() => {
 	// 	if (items.length) {
 	// 		console.log('Запись!');
@@ -86,16 +89,18 @@ function App() {
 	};
 
 	return (
-		<div className='app'>
-			<LeftPanel>
-				<Header />
-				<JournalAddButton />
-				<JournalList items={mapItems(items)} />
-			</LeftPanel>
-			<Body>
-				<JournalForm onSubmit={addItem} />
-			</Body>
-		</div>
+		<UserContext.Provider value={{ userId, setUserId }}>
+			<div className='app'>
+				<LeftPanel>
+					<Header />
+					<JournalAddButton />
+					<JournalList items={mapItems(items)} />
+				</LeftPanel>
+				<Body>
+					<JournalForm onSubmit={addItem} />
+				</Body>
+			</div>
+		</UserContext.Provider>
 	);
 }
 

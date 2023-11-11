@@ -1,7 +1,7 @@
 import './Button.css';
 import { useState } from 'react';
 
-function Button({ text, onClick }) {
+function Button({ children, onClick }) {
 
 	// const [text, setText] = useState('Сохранить');
 
@@ -11,7 +11,7 @@ function Button({ text, onClick }) {
 	// };
 
 	return (
-		<button className='button accent' onClick={onClick}>{text}</button>
+		<button className='button accent' onClick={onClick}>{children}</button>
 	);
 }
 
